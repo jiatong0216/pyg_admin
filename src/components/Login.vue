@@ -51,6 +51,7 @@ export default {
           //  console.log('成功')
           // 发送登录的请求
           const {data: {data, meta}} = await this.$http.post('login',this.form)
+          
           if(meta.status !== 200) return this.$message.error(meta.msg || '登录失败')
           // 登录成功  保存token  sessionStorage 
           sessionStorage.setItem('token', data.token)

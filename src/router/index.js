@@ -26,6 +26,10 @@ const router = new Router({
 // 添加导航守卫
 router.beforeEach((to, from, next) => {
   // 如果跳转是登录状态 next()
-  if 
+  if (to.path === '/login') return next()
+  // 如果未登录 检测sessionStorage是否有token 没有token 拦截到登录页
+  if (!sessionStorage.getItem('token')) return next('/login')
+  // 其他情况
+  next()
 })
 export default router
