@@ -10,9 +10,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 // 依赖配置好的axios
-import axios from 'http'
+import axios from './http'
 
-Vue.use(ElementUI, {size: 'small'})
+// 依赖iconfont
+import './assets/fonts/iconfont.css'
+// 注册 ElementUI
+Vue.use(ElementUI, { size: 'small' })
 
 Vue.prototype.$http = axios
 
