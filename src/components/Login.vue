@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item prop="password">
           <el-input
-            prefix-icon="iconfont icon-mima1"
+            prefix-icon="iconfont icon-mima"
             type="password"
             placeholder="请输入密码"
             v-model="form.password"
