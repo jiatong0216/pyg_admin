@@ -9,11 +9,15 @@ import './assets/css/global.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(ElementUI)
+// 依赖配置好的axios
+import axios from 'http'
+
+Vue.use(ElementUI, {size: 'small'})
+
+Vue.prototype.$http = axios
 
 // 控制台的日志是否详细
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 
 new Vue({
