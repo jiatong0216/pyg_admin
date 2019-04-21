@@ -13,14 +13,13 @@
           style="border: none; margin-top: 5px"
           background-color="#333744"
           text-color="#fff"
-          active-text-color="#ffd04b">
-          <el-submenu index="1">
+          active-text-color="#ffd04b" >
+          <el-submenu index="1"  v-for="item in list" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>{{item.authName}}</span>
             </template>
-            <el-menu-item index="1-1">选项2</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
+            <el-menu-item index="1-1" v-for="itemChildren in item.children" :key = "itemChildren.id">{{itemChildren.authName}}</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -34,6 +33,15 @@ export default {
   data() {
     return {
       collapse: false,
+      list: [
+        {authName: '',
+         id: '',
+         children: [
+           {authName: '',
+            id: ''
+          }]
+        },
+      ],
     }
   },
   methods: {
@@ -42,7 +50,10 @@ export default {
     },
     // 获取数据
     getData() {
-      this.$http.get('menus').then(res => console.log(res.data))
+      this.$http.get('menus').then(res => {
+        // console.log(res.data)
+        this.list = res.data.data
+      }).catch(err => alert('获取信息失败'))
     }
   },
   mounted() {
