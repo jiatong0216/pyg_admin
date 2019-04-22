@@ -84,7 +84,6 @@ export default {
   background: #333744;
 }
 .home_main {
-  text-align: center;
   background: #eaedf1;
   font-size: 20px;
 }
