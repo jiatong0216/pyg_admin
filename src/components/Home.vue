@@ -3,27 +3,32 @@
     <el-header class="home_header">
       <el-button icon="iconfont icon-caidan" size="mini" @click="toggleMenu()" circle></el-button>
       <span class="title">是时候表演真正的技术了!</span>
-      <el-button class="logout" type="danger" size="mini" round>退出</el-button>
+      <el-button class="logout" type="danger" size="mini" round @click="out()">退出</el-button>
     </el-header>
     <el-container>
       <el-aside class="home_aside" :width="collapse ? '65px' : '180px'">
         <el-menu
+          router
+          :unique-opened= "true"
           :collapse="collapse"        
           :collapse-transition="false"
           style="border: none; margin-top: 5px"
           background-color="#333744"
           text-color="#fff"
           active-text-color="#ffd04b" >
-          <el-submenu index="1"  v-for="item in list" :key="item.id">
+          <el-submenu :index="item.id.toString()"  v-for="(item, i) in menus" :key="item.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{item.authName}}</span>
+              <i :class="['iconfont', icons[i]]"></i>
+              <span>&nbsp;&nbsp;&nbsp;{{item.authName}}</span>
             </template>
-            <el-menu-item index="1-1" v-for="itemChildren in item.children" :key = "itemChildren.id">{{itemChildren.authName}}</el-menu-item>
+            <el-menu-item :index="itemChildren.path" v-for="itemChildren in item.children" :key = "itemChildren.id">
+              <i class="el-icon-menu"></i>
+              <span>{{itemChildren.authName}}</span>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main class="home_main">Main</el-main>
+      <el-main class="home_main">我用双手成就你的梦想 梦想型选手</el-main>
     </el-container>
   </el-container>
 </template>
@@ -33,15 +38,8 @@ export default {
   data() {
     return {
       collapse: false,
-      list: [
-        {authName: '',
-         id: '',
-         children: [
-           {authName: '',
-            id: ''
-          }]
-        },
-      ],
+      menus: [],  
+      icons: ['icon-yonghuguanli','icon-permission','icon-shangpinguanli','icon-dingdanguanli','icon-dabianshujutongji'] 
     }
   },
   methods: {
@@ -49,11 +47,20 @@ export default {
       this.collapse = !this.collapse
     },
     // 获取数据
-    getData() {
-      this.$http.get('menus').then(res => {
+    async getData() {
+     /*  this.$http.get('menus').then(res => {
         // console.log(res.data)
         this.list = res.data.data
-      }).catch(err => alert('获取信息失败'))
+      }).catch(err => alert('获取信息失败')) */
+      const {data: {data, meta}} = await this.$http.get('menus')
+      // 判断获取是否成功,  添加操作 201 ,其他操作200
+      if( meta.status !== 200) return this.$message.error('获取菜单失败')
+      // 成功时 修改data中的数据
+      this.menus = data
+    },
+    out() {
+      sessionStorage.removeItem('token')
+      this.$router.push('/login')
     }
   },
   mounted() {
@@ -75,8 +82,11 @@ export default {
   background: #333744;
 }
 .home_main {
+  text-align: center;
   background: #eaedf1;
+  font-size: 20px;
 }
+
 .title {
   padding-left: 20px;
   color: #fff;

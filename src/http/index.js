@@ -10,7 +10,6 @@ axios.interceptors.request.use(config => {
     config.headers.Authorization = sessionStorage.getItem('token')
     return config
 })
-
 // 添加响应拦截器
 // 判断token是否失效
 axios.interceptors.response.use(res => {
