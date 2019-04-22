@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+import Welcome from '@/components/Welcome'
+import Users from '@/components/Users'
 
 Vue.use(Router)
 const router = new Router({
@@ -9,7 +11,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login  
     },
     {
       // 如果是 / 根路径 重定向到/home
@@ -19,7 +21,12 @@ const router = new Router({
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      redirect: '/welcome',
+      children: [
+        {path: '/welcome', name: 'welcome', component: Welcome},
+        {path: '/users', name: 'users', component: Users}
+      ]
     }
   ]
 })

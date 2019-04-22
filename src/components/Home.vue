@@ -3,7 +3,7 @@
     <el-header class="home_header">
       <el-button icon="iconfont icon-caidan" size="mini" @click="toggleMenu()" circle></el-button>
       <span class="title">是时候表演真正的技术了!</span>
-      <el-button class="logout" type="danger" size="mini" round @click="out()">退出</el-button>
+      <el-button class="logout" type="danger" size="mini" round @click="logOut()">退出</el-button>
     </el-header>
     <el-container>
       <el-aside class="home_aside" :width="collapse ? '65px' : '180px'">
@@ -28,7 +28,9 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main class="home_main">我用双手成就你的梦想 梦想型选手</el-main>
+      <el-main class="home_main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -58,7 +60,7 @@ export default {
       // 成功时 修改data中的数据
       this.menus = data
     },
-    out() {
+    logOut() {
       sessionStorage.removeItem('token')
       this.$router.push('/login')
     }
