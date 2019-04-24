@@ -28,8 +28,8 @@ const router = new Router({
       children: [
         {path: '/welcome', name: 'welcome', component: Welcome},
         {path: '/users', name: 'users', component: Users},
-        {path: '/rights', name: 'users', component: Rights},
-        {path: '/roles', name: 'users', component: Roles}
+        {path: '/rights', name: 'rights', component: Rights},
+        {path: '/roles', name: 'roles', component: Roles}
       ]
     }
   ]
