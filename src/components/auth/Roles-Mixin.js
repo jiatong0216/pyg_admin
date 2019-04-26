@@ -48,12 +48,12 @@ export default {
 
     }
   },
-  mounted() {
+  mounted () {
     this.getData()
   },
   methods: {
     // 获取列表数据
-    async getData() {
+    async getData () {
       const { data: { data, meta } } = await this.$http.get('roles')
       if (meta.status !== 200) return this.$message.error('获取角色列表失败')
       // 表格中data对数据格式有固定要求 会解析children数据 需要对children数据进行处理
@@ -74,7 +74,7 @@ export default {
       this.rolesList = data
       //   console.log(data)
     },
-    showAdd() {
+    showAdd () {
       // 显示添加对话框
       this.addDialogFormVisible = true
       // 重置表单 内容 验证resetFields()
@@ -82,7 +82,7 @@ export default {
         this.$refs.addForm.resetFields()
       })
     },
-    addSubmit() {
+    addSubmit () {
       // 添加功能  验证表单 --> 提交请求 --> 成功关闭对话框 --> 更新数据列表
       this.$refs.addForm.validate(async valid => {
         if (valid) {
@@ -94,7 +94,7 @@ export default {
         }
       })
     },
-    delRoles(id) {
+    delRoles (id) {
       // 删除角色功能 点击确认发送请求 --> 成功 -->更新列表数据
       this.$confirm('是否删除该数据??', '温馨提示= =!', {
         confirmButtonText: '确定',
@@ -107,7 +107,7 @@ export default {
         this.getData()
       }).catch(() => { })
     },
-    showEdit(id) {
+    showEdit (id) {
       // 显示对话编辑框 -->默认填充数据  --> 更新数据列表
       this.editDialogFormVisible = true
       this.$nextTick(async () => {
@@ -117,7 +117,7 @@ export default {
         this.editForm = data
       })
     },
-    editSubmit() {
+    editSubmit () {
       // 编辑角色功能  验证表单 --> 发送请求 --> 关闭对话框--> 更新列表
       this.$refs.editForm.validate(async valid => {
         if (valid) {
@@ -132,7 +132,7 @@ export default {
         }
       })
     },
-    delRights(row, rightId) {
+    delRights   (row, rightId) {
       // 删除功能
       this.$confirm('是否删除该权限?', '温馨提示', {
         confirmButtonText: '确定',
@@ -154,10 +154,10 @@ export default {
         row.child = data
       }).catch(() => { })
     },
-    async showRight(row) {
+    async showRight (row) {
       // 显示分配权限对话框 --> 发请求获取树状结构数据 --> 渲染数据     
       const {data: {data, meta}} = await this.$http.get('rights/tree')
-      if(meta.status !== 200) return this.$message.error('获取所有权限失败')
+      if (meta.status !== 200) return this.$message.error('获取所有权限失败')
       // console.log(data)
       this.rightTree = data
       // 选中已有权限
@@ -176,7 +176,7 @@ export default {
       // 设置当前分配权限的角色ID
       this.rightRoleId = row.id
     },
-    async rightSubmit() {
+    async rightSubmit () {
       // 分配权限 合并半选和全选 -->提交角色授权请求 --> 关闭对话框--> 更新列表
       const treeDom = this.$refs.tree
       // 获取选中
@@ -189,7 +189,7 @@ export default {
       const {data: {meta}} = await this.$http.post(`roles/${this.rightRoleId}/rights`, {
         rids: arr.join(',')
       })
-      if(meta.status !== 200) return this.$message.error('角色授权失败')
+      if (meta.status !== 200) return this.$message.error('角色授权失败')
       this.$message.success('角色授权成功')
       this.rightDialogFormVisible = false
       this.getData()

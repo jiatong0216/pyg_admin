@@ -63,6 +63,7 @@
             :options="categoryList"
             v-model="categoryValues"
             :change-on-select= "true"
+            :clearable="true"
             :props="{value: 'cat_id',label:'cat_name'}"
           ></el-cascader>
         </el-form-item>

@@ -62,7 +62,7 @@ export default {
       if (meta.status !== 200) return this.$message.error('获取分类数据失败')
       // 设置下拉选择数据
       this.categoryList = data
-      console.log(data)
+      // console.log(data)
       // 重置级联之前选择的值
       this.categoryValues = []
       this.addDialogFormVisible = true
@@ -104,9 +104,10 @@ export default {
       // 验证表单 -->提交请求 --> 更新数据-->关闭对话框
       this.$refs.editForm.validate(async valid => {
         if (valid) {
-          const {data: {meta}} = await this.$http.put(`categories/${this.editForm.cat_id}`, {
+          const {data: {data, meta}} = await this.$http.put(`categories/${this.editForm.cat_id}`, {
             cat_name: this.editForm.cat_name
           })
+          console.log(data)
           if (meta.status !== 200) return this.$message.error('编辑分类失败')
           this.$message.success('编辑分类成功')
           this.getData()
@@ -114,8 +115,17 @@ export default {
         }
       })
     },
-    del () {
-      
+    del (id) {
+      this.$confirm('是否删除该分类??', '温馨提示= =!', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const { data: { meta } } = await this.$http.delete(`categories/${id}`)
+        if (meta.status !== 200) return this.$message.error('删除分类失败')
+        this.$message.success('删除分类成功')
+        this.getData()
+      }).catch(() => { })
     }
   }
 }
