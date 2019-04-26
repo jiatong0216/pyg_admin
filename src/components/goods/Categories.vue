@@ -30,8 +30,8 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button icon="el-icon-edit" @click="showEditDialog(scope.row.cat_id)" round></el-button>
-              <el-button icon="el-icon-delete" @click="delCategory(scope.row.cat_id)" round></el-button>
+              <el-button icon="el-icon-edit" @click="showEdit(scope.row.cat_id)" round></el-button>
+              <el-button icon="el-icon-delete" @click="del(scope.row.cat_id)" round></el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -56,21 +56,35 @@
       >
         <el-form-item label="父级分类">
           <!-- 级联显示 -->
+           <!-- props =｛value:'选项对象的id字段',label:'选项对象的名称字段'｝ -->
           <el-cascader
             style="width: 100%"
             expand-trigger="hover"
             :options="categoryList"
             v-model="categoryValues"
-            @change="handleChange"
+            :change-on-select= "true"
+            :props="{value: 'cat_id',label:'cat_name'}"
           ></el-cascader>
         </el-form-item>
-        <el-form-item label="分类名称">
+        <el-form-item label="分类名称" prop="cat_name">
           <el-input v-model="addForm.cat_name"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addDialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="addSubmit()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 编辑分类 -->
+    <el-dialog title="编辑分类" width="400px" :visible.sync="editDialogFormVisible">
+      <el-form ref="editForm" :model="editForm" :rules="editRules" label-width="100px" autocomplete="off">
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="editForm.cat_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editSubmit()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
