@@ -98,4 +98,7 @@ export default {
   float: right;
   margin-top: 15px;
 }
+.el-submenu .el-menu-item {
+  min-width: 180px;
+}
 </style>
