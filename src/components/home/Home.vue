@@ -8,7 +8,7 @@
     <el-container>
       <el-aside class="home_aside" :width="collapse ? '65px' : '180px'">
         <el-menu
-          :default-active="$route.name"
+          :default-active="'/'+$route.name"
           router
           :unique-opened= "true"
           :collapse="collapse"        
@@ -22,7 +22,7 @@
               <i :class="['iconfont', icons[i]]"></i>
               <span>&nbsp;&nbsp;&nbsp;{{item.authName}}</span>
             </template>
-            <el-menu-item :index="itemChildren.path" v-for="itemChildren in item.children" :key = "itemChildren.id">
+            <el-menu-item :index="'/'+itemChildren.path" v-for="itemChildren in item.children" :key = "itemChildren.id">
               <i class="el-icon-menu"></i>
               <span>{{itemChildren.authName}}</span>
             </el-menu-item>
