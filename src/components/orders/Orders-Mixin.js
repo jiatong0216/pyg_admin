@@ -1,4 +1,4 @@
-// import city from './city'
+import city from './city'
 export default {
   name: 'Orders',
   data () {
@@ -11,7 +11,7 @@ export default {
       ordersList: [],
       total: 0,
       editDialogFormVisible: false,
-    //   categoryList: city,
+      categoryList: city,
       categoryValues: [],
       wlDialogFormVisible: false,
       wlList: [
